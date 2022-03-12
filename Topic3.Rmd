@@ -57,12 +57,15 @@ library("testthat")
 
 ```
 
+init some libraries
+
 ```{r, eval=TRUE}
 
 light = read.table("light.dat", header = TRUE)
 farm = read.table("farm.dat", header = TRUE)
 fertile = read.table("fertile.dat", header = TRUE)
 ```
+Read the data
 
 ```{r, eval=TRUE}
 
@@ -75,9 +78,9 @@ names(out)
 pValue = t.test(light$Brand1, light$Brand2, var.equal = TRUE)$p.value
 pValue
 
-pValue = t.test(light$Brand1, light$Brand2, var.equal = TRUE)$p.value
-
 ```
+
+Find SD of both lights and do t test
 
 ```{r}
 
@@ -96,7 +99,8 @@ if(pValue < 0.05) {
 } else {
   print("Do Not Reject")
 }
-boxplot(Brand1 ~ Brand2, data = light, horizontal = TRUE)
+boxplot(Brand1, data = light, horizontal = TRUE)
+boxplot(Brand2, data = light, horizontal = TRUE)
 summary(light$Brand1)
 summary(light$Brand2)
 mean(light$Brand1)
@@ -105,7 +109,11 @@ sd(light$Brand1)
 sd(light$Brand2)
 stem(light$Brand1)
 stem(light$Brand2)
+bob <- qqnorm(light$Brand1)
+bob
 
+#'
+#'ggplot(data = light, mapping = aes(x = light$Brand1, y = light$Brand2))
 ```
 
 ```{r}
