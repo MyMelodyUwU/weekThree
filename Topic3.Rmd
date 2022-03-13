@@ -69,6 +69,10 @@ Read the data
 
 ```{r, eval=TRUE}
 
+# Population paramter is the difference of meanso
+
+# when we minus u 1 - u 2, our h0 is if the two numbers == 0. Since its not == to 0, then we are 95% sure that we can reject the null hypothesis. 
+
 lSDOne <- sd(light$Brand1)
 lSDTwo <- sd(light$Brand2)
 
@@ -87,7 +91,9 @@ Find SD of both lights and do t test
 
 # q1----------------------------------------------------
 
-# Need of 2 sample t test on data.
+# equal variace assumption is done here since its close.
+
+# As the means are the same, we can reject the null hypothesis 
 
 # Show data summary
 
@@ -99,8 +105,13 @@ if(pValue < 0.05) {
 } else {
   print("Do Not Reject")
 }
-boxplot(Brand1, data = light, horizontal = TRUE)
-boxplot(Brand2, data = light, horizontal = TRUE)
+par(mfrow=c(1,2))
+boxplot(light$Brand1, data = light)
+boxplot(light$Brand2, data = light)
+boxplot(light)
+
+
+
 summary(light$Brand1)
 summary(light$Brand2)
 mean(light$Brand1)
@@ -126,7 +137,16 @@ summary(farm$yield)
 summary(farm$plot)
 mean(farm$yield)
 sd(farm$yield)
-stem(farm$yield)
+stem(farm)
+
+yield <- data.frame(sprayed=farm$yield[farm$plot == "sprayed"], unsprayed=farm$yield[farm$plot == "unsprayed"])
+yield$difference <- yield$sprayed - yield$unsprayed
+yield
+yield$sprayed 
+
+
+t.test(yield$sprayed ~ yield$unsprayed, paired = TRUE)
+
 ```
 
 ```{r}
